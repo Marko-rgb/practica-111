@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>p111</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <p>Archivo:<input type="file" id="foto" required></p>
+  <p><button type="button" id="boton1" >enviar archivo seleccionado</button></p>
+  <p><img id="imagen"></p>
+
+  <script>
+    addEventListener("DOMContentLoaded", () => {
+      document.getElementById("boton1").addEventListener("click", () => agregar());
+    });
+
+    function agregar() {
+      let fd = new FormData();
+      fd.append("foto", document.getElementById("foto").files[0]);
+      fetch('subirfoto.php', {
+        method: 'POST',
+        body: fd
+      })
+        .then(response => response.json())
+        .then(datos => {
+          if (datos.resultado == "Ok")
+            document.getElementById("imagen").setAttribute("src", document.getElementById("foto").files[0].name);
+        })
+    }
+  </script>
+
+</body>
+
+</html>
